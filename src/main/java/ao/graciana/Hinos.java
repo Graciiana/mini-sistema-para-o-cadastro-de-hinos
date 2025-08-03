@@ -19,14 +19,6 @@ public class Hinos {
     private String tipoHino;
     private String descricaoHino;
 
-
-
-    //ToString
-
-    /*public String toString(){
-        return "{"+"[Nome do Hino: " +this.nomeHino+ " ]"+ "[ Categoria: "+this.tipoHino+ " ]" + " [ Descrição: "+this.descricaoHino+ " ]"+ " }";
-    }*/
-
     //Metodos para cadastrar e listar Hinos
 
     public void cadastroHinos(){
@@ -49,12 +41,74 @@ public class Hinos {
 
     public static void listarHinos(){
         System.out.println("======== Lista dos Hinos =========");
-        for (Hinos hino: hinosList) {
-            System.out.println(hino);
+        for (int i = 0; i < hinosList.size(); i++) {
+            System.out.println("[" + i + "] " + hinosList.get(i).getNomeHino());
         }
+        System.out.print("Queres fazer alguma modificação na lista? ");
+        String opcao=tec.nextLine();
+
+        if (opcao.equalsIgnoreCase("Sim")){
+            System.out.println("Digite uma das opções a seguir: [1] editar / [2] pesquisar / [0]remover");
+            int modificar= tec.nextInt();
+
+            if (modificar==0){
+                tec.nextLine();
+                Hinos.eliminarHinos();
+                ArquivarDados.salvarHinosNoArquivo();
+                System.out.println("Dados eliminado com sucesso.");
+            }
+            else if (modificar==1) {
+
+            } else if (modificar==2) {
+
+            }
+        }
+        else{
+            System.out.println("Saindo...");
+            Hinos.limpar();
+        }
+    }
+
+
+    //Métodos suxiliares: Editar, eliminar, limpar
+
+    public static void editarHinos(){
 
     }
-    //Métodos suxiliares: Editar, eliminar, limpar
+
+
+    public static void eliminarHinos() {
+        if (hinosList.isEmpty()) {
+            System.out.println("A lista de hinos está vazia. Nada para remover.");
+            return;
+        }
+
+        int indice = -1;
+        boolean valido = false;
+
+        do {
+            try {
+                System.out.print("Digite o número do hino que deseja remover (ou -1 para cancelar): ");
+                indice = Integer.parseInt(tec.nextLine());
+
+                if (indice == -1) {
+                    System.out.println("Remoção cancelada.");
+                    return;
+                }
+
+                if (indice >= 0 && indice < hinosList.size()) {
+                    Hinos removido = hinosList.remove(indice);
+                    System.out.println("Hino '" + removido.getNomeHino() + "' removido com sucesso!");
+                    valido = true;
+                } else {
+                    System.out.println("Índice inválido. Tente novamente.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Digite um número válido.");
+            }
+        } while (!valido);
+    }
 
     //Limpar:
     public static void limpar(){
