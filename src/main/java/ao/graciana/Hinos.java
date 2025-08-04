@@ -52,18 +52,15 @@ public class Hinos {
         String opcao=tec.nextLine();
 
         if (opcao.equalsIgnoreCase("Sim")){
-            System.out.println("Digite uma das opções a seguir: [1] editar / [2] pesquisar / [0]remover");
+            System.out.println("Digite uma das opções a seguir: [1] editar / [2]remover");
             int modificar= tec.nextInt();
             tec.nextLine();
 
-            if (modificar==0){
+            if (modificar==2){
                 ArquivarDados.eliminarHinos();
             }
             else if (modificar==1) {
                 ArquivarDados.editarHinos();
-            }
-            else if (modificar==2) {
-
             }
         }
         else{
