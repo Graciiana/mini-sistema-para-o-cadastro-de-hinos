@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +14,8 @@ import java.util.Scanner;
 
 public class Hinos {
 
-    static List<Hinos> hinosList= new LinkedList<>();
-    static Scanner tec= new Scanner(System.in);
+    public static List<Hinos> hinosList= new LinkedList<>();
+    public static Scanner tec= new Scanner(System.in);
     private String nomeHino;
     private String tipoHino;
     private String descricaoHino;
@@ -36,13 +37,16 @@ public class Hinos {
         ArquivarDados.salvarHinosNoArquivo();
         System.out.println("Dados salvos com sucesso");
         tec.nextLine();
-        Hinos.limpar();
+        ArquivarDados.limpar();
     }
 
     public static void listarHinos(){
         System.out.println("======== Lista dos Hinos =========");
-        for (int i = 0; i < hinosList.size(); i++) {
-            System.out.println("[" + i + "] " + hinosList.get(i).getNomeHino());
+       /* for (int i = 0; i < hinosList.size(); i++) {
+            System.out.println("[" + i + "] " + Hinos.tec);
+        }*/
+        for (Hinos hino:hinosList){
+            System.out.println(hino.exibirHinoBonito());
         }
         System.out.print("Queres fazer alguma modificação na lista? ");
         String opcao=tec.nextLine();
@@ -50,71 +54,30 @@ public class Hinos {
         if (opcao.equalsIgnoreCase("Sim")){
             System.out.println("Digite uma das opções a seguir: [1] editar / [2] pesquisar / [0]remover");
             int modificar= tec.nextInt();
+            tec.nextLine();
 
             if (modificar==0){
-                tec.nextLine();
-                Hinos.eliminarHinos();
-                ArquivarDados.salvarHinosNoArquivo();
-                System.out.println("Dados eliminado com sucesso.");
+                ArquivarDados.eliminarHinos();
             }
             else if (modificar==1) {
-
-            } else if (modificar==2) {
+                ArquivarDados.editarHinos();
+            }
+            else if (modificar==2) {
 
             }
         }
         else{
-            System.out.println("Saindo...");
-            Hinos.limpar();
+            System.out.println("Entrada invalida");
+            ArquivarDados.limpar();
         }
     }
-
-
-    //Métodos suxiliares: Editar, eliminar, limpar
-
-    public static void editarHinos(){
-
+    //Métododo para exibir os dados de forma bonita
+    public String exibirHinoBonito() {
+        return "Hino: " + nomeHino + "\n"
+                + " Categoria: " + tipoHino + "\n"
+                + " Descrição: " + descricaoHino + "\n";
     }
 
 
-    public static void eliminarHinos() {
-        if (hinosList.isEmpty()) {
-            System.out.println("A lista de hinos está vazia. Nada para remover.");
-            return;
-        }
-
-        int indice = -1;
-        boolean valido = false;
-
-        do {
-            try {
-                System.out.print("Digite o número do hino que deseja remover (ou -1 para cancelar): ");
-                indice = Integer.parseInt(tec.nextLine());
-
-                if (indice == -1) {
-                    System.out.println("Remoção cancelada.");
-                    return;
-                }
-
-                if (indice >= 0 && indice < hinosList.size()) {
-                    Hinos removido = hinosList.remove(indice);
-                    System.out.println("Hino '" + removido.getNomeHino() + "' removido com sucesso!");
-                    valido = true;
-                } else {
-                    System.out.println("Índice inválido. Tente novamente.");
-                }
-
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Digite um número válido.");
-            }
-        } while (!valido);
-    }
-
-    //Limpar:
-    public static void limpar(){
-        for (int i=0; i<=50; i++){
-            System.out.println();
-        }
-    }
 
 }

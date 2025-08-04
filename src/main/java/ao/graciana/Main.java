@@ -24,14 +24,14 @@ public class Main {
                     Hinos hino= new Hinos();
                     hino.cadastroHinos();
                     teclado.nextLine();
-                    Hinos.limpar();
+                    ArquivarDados.limpar();
                     break;
                 case "2":
                     Hinos.listarHinos();
                     break;
                 case "3":
                     contador=false;
-                    Hinos.limpar();
+                    ArquivarDados.limpar();
                     break;
                 default:
                     System.out.println("Nenhuma das opções foi encontrada. ");
